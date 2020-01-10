@@ -10,10 +10,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,  UITextFieldDelegate{
     
-
-
+    @IBOutlet weak var test1: UITextField!
+    
+    
+    
+    
+    
     //#sample sudoku puzzle as 2d list
     var sudoku:[[Int]] = [[0,0,0,2,6,0,7,0,1], [6,8,0,0,7,0,0,9,0], [1,9,0,0,0,4,5,0,0],
               [8,2,0,1,0,0,0,4,0], [0,0,4,6,0,2,9,0,0], [0,5,0,0,0,3,0,2,8],
@@ -23,6 +27,8 @@ class ViewController: UIViewController {
               [8,2,6,1,9,5,3,4,7], [3,7,4,6,8,2,9,1,5], [9,5,1,7,4,3,6,2,8],
               [5,1,9,3,2,6,8,7,4], [2,4,8,9,5,7,1,3,6], [7,6,3,4,1,8,2,5,9]]
     //#https://dingo.sbs.arizona.edu/~sandiway/sudoku/examples.html
+    
+    
 
     //#Number Node class, each node holds the value of a guess at a set of coordinates
     class Node{
@@ -199,7 +205,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view
+        test1.delegate = self
         let toGuess = LinkedList()
         //#sentinal node
         toGuess.head = Node(-1,-1,-1)
@@ -215,17 +222,14 @@ class ViewController: UIViewController {
                 }
             }
         }
-
-
-       
-        //test to see if I get all the spots  to guess correctly
-        var temp:Node! = toGuess.head.next
-        while temp != nil{
-            print("row: " + String(temp.row))
-            print("col: " + String(temp.col))
-            print("")
-            temp = temp.next
-        }
+//        //test to see if I get all the spots  to guess correctly
+//        var temp:Node! = toGuess.head.next
+//        while temp != nil{
+//            print("row: " + String(temp.row))
+//            print("col: " + String(temp.col))
+//            print("")
+//            temp = temp.next
+//        }
         //
         //    # #test to see if i implemented the doubly linked list correctly
         //    # temp = toGuess.tail
@@ -248,29 +252,29 @@ class ViewController: UIViewController {
         while !solved{
             display()
             print("")
-            var guess:Node = Node(10,10,10)
+            var guess:Node = Node(0,0,0)
             print("Do you give up and want it solved for you? (press y for yes, anything else for no): ")
-            if let answer = readLine(){
-                if answer == "y"{
-                    solve(toGuess.head.next)
-                    print("this was the answer: ")
-                    display()
-                    break
-                }
+            
+          
+            if test1.text == "y"{
+                solve(toGuess.head.next)
+                print("this was the answer: ")
+                display()
+                break
             }
 
             //#checks if the user's guess is valid
             var valid = false
             while !valid{
                 print("Enter a guess (in order of row, then column, then value): \n")
-                if let row = readLine(){
+                while let row = readLine(){
                     if Int(row)! > 9 || Int(row)! < 1{
                         print("Invalid Row Number")
                         continue
                     }
                     guess.row = Int(row)!
                 }
-                 if let col = readLine(){
+                 while let col = readLine(){
                     if Int(col)! > 9 || Int(col)! < 1{
                        print("Invalid Col Number")
                        continue
@@ -283,7 +287,7 @@ class ViewController: UIViewController {
                     continue
                 }
 
-                if let value = readLine(){
+                while let value = readLine(){
                     if Int(value)!>9 || Int(value)!<1{
                         print("invalid Value")
                         continue
@@ -310,3 +314,10 @@ class ViewController: UIViewController {
 
 }
 
+
+
+extensionViewController {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        print(test1.text)
+    }
+}
