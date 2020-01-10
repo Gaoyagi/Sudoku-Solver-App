@@ -13,6 +13,8 @@ commits you see on this Repo are from when I translated my python code to swift 
 All the commits related to me designing the game portion aand the solving algorithm can be found at the following repo:
 https://github.com/Gaoyagi/Sudoku-Solver
 
+(as of right now only the python version works right now, go use the above repo link the access and test that) 
+
 ### Author
 George Aoyagi
 
